@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/partition-list/description/?envType=problem-list-v2&envId=two-pointers
+// https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/description/?envType=problem-list-v2&envId=linked-list
 
 #include <iostream>
 using namespace std;

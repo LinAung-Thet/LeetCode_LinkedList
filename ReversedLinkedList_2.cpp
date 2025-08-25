@@ -7,33 +7,34 @@ struct ListNode{
     ListNode() : val(0), next(nullptr){}
     ListNode(int x) : val(x), next(nullptr){}
     ListNode(int x, ListNode* n) : val(x), next(n){}
+    ListNode(ListNode* ln) : val(ln->val), next(ln->next){}
 };
 class Solution{
 public :
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        if (left == right) return head;
-        
-        int i = 1;
-        ListNode* curr = head;
-        ListNode* pfx;
-        while (i < left && curr) {
-            pfx = curr;
-            curr = curr->next;
-            ++i;
+        if (!head || left == right) return head;
+
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode* prev = &dummy;
+
+        // Step 1: Move `prev` to the node before `left`
+        for (int i = 1; i < left; ++i) {
+            prev = prev->next;
         }
-        ListNode* tail = curr;  // tail of the reversed part
-        ListNode* prev;
-        ListNode* buff;
-        while (i < right) {
-            buff = curr->next;
-            prev = curr;        // 1
-            curr = curr->next;
-            curr->next = prev;
-            curr = buff;
-            ++i;
+
+        // Step 2: Reverse the sublist from `left` to `right`
+        ListNode* curr = prev->next;
+        ListNode* next = nullptr;
+
+        for (int i = 0; i < right - left; ++i) {
+            next = curr->next;
+            curr->next = next->next;
+            next->next = prev->next;
+            prev->next = next;
         }
-        pfx->next = prev;   // head of the reversed part
-        tail->next = curr;
+
+        return dummy.next;
     }
 };
 int main(){
@@ -42,8 +43,21 @@ int main(){
     int left, right;
 
     cout << "Test case 1" << endl;
+    head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+    left = 2; right = 4;
+    head = solution.reverseBetween(head, left, right);
+    cout << "Expected: 1 4 3 2 5" << endl;
+    cout << "Result  : ";
+    while (head) {
+        cout << head->val << " ";
+        head = head->next;
+    }
+    cout << endl << endl;
+
+    cout << "Test case 2" << endl;
     head = new ListNode(5);
     left = 1; right = 1;
+    head = solution.reverseBetween(head, left, right);
     cout << "Expected: 5" << endl;
     cout << "Result  : ";
     while (head) {

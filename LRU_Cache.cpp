@@ -2,7 +2,7 @@
 #include <unordered_map>
 using namespace std;
 
-class Cache {
+class LRUCache {
 private:
     struct Node{
         int value;
@@ -35,7 +35,7 @@ private:
     }
 
 public:
-    Cache(int _capacity) {
+    LRUCache(int _capacity) {
         capacity = _capacity;
         head->next = tail;
         tail->prev = head;
@@ -72,3 +72,28 @@ public:
         data[key] = head->next;
     }
 };
+
+int main() {
+    LRUCache cache(2);
+
+    cout << "1 -1 -1 3 4" << endl;
+
+    cache.put(1, 1);
+    cache.put(2, 2);
+
+    cout << cache.get(1) << " ";
+
+    cache.put(3, 3);
+
+    cout << cache.get(2) << " ";
+
+    cache.put(4, 4);
+
+    cout << cache.get(1) << " ";
+    cout << cache.get(3) << " ";
+    cout << cache.get(4) << " ";
+
+    cout << endl;
+
+    return 0;
+}

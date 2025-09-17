@@ -52,5 +52,17 @@ int main() {
     }
     cout << endl << endl;
 
+    cout << "Test case 2" << endl;
+    head = new ListNode(-1, new ListNode(5, new ListNode(3, new ListNode(4, new ListNode(0)))));
+    head = solution.insertionSortList(head);
+    cout << "Input   : -1 5 3 4 0" << endl;
+    cout << "Expected: -1 0 3 4 5" << endl;
+    cout << "Result  :";
+    while (head) {
+        cout << " " << head->val;
+        head = head->next;
+    }
+    cout << endl << endl;
+
     return 0;
 }

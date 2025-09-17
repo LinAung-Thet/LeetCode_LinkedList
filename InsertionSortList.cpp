@@ -12,34 +12,45 @@ struct ListNode{
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
-        ListNode dummy(0, head);
-        ListNode* prev = &dummy;
+        ListNode dummy(0);
+        ListNode* curr = head;
 
-        while (head) {
-            ListNode* nextNode = head->next;
-            ListNode* temp = &dummy;
+        while (curr) {
+            ListNode* prev = &dummy;
+            ListNode* nextNode = curr->next;
 
-            // insert the current node at an appropriate position
-            while (temp && temp->next != head) {
-                if (head->val < temp->next->val) {
-                    // insert the node
-                    head->next = temp->next->next;
-                    temp->next = head;
-
-                    // remove the current node.
-                    prev->next = head->next;
-
-                    break;
-                }
-                temp = temp->next;
+            while (prev->next && prev->next->val < curr->val) {
+                prev = prev->next;
             }
 
-            // move the pointer
-            prev = head;
-            head = nextNode;
-        }
+            // Insert the current node between prev and the following node
+            curr->next = prev->next;
+            prev->next = curr;
 
+            // Move curr to the next node in the original sequence
+            curr = nextNode;
+        }
+  
         // return the result
         return dummy.next;
     }
 };
+
+int main() {
+    Solution solution;
+    ListNode* head;
+
+    cout << "Test case 1" << endl;
+    head = new ListNode(4, new ListNode(2, new ListNode(1, new ListNode(3))));
+    head = solution.insertionSortList(head);
+    cout << "Input   : 4 2 3 1" << endl;
+    cout << "Expected: 1 2 3 4" << endl;
+    cout << "Result  :";
+    while (head) {
+        cout << " " << head->val;
+        head = head->next;
+    }
+    cout << endl << endl;
+
+    return 0;
+}

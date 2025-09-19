@@ -61,3 +61,46 @@ private:
         return dummy.next;
     }
 };
+
+int main() {
+    Solution solution;
+    ListNode* head;
+
+    cout << "Test case 1" << endl;
+    cout << "Input   : 4 2 1 3" << endl;
+    cout << "Expected: 1 2 3 4" << endl;
+    cout << "Result  :";
+    head = new ListNode(4, new ListNode(2, new ListNode(1, new ListNode(3))));
+    head = solution.sortList(head);
+    while (head) {
+        cout << " " << head->val;
+        head = head->next;
+    }
+    cout << endl << endl;
+
+    cout << "Test case 2" << endl;
+    cout << "Input   : -1 5 3 4 0" << endl;
+    cout << "Expected: -1 0 3 4 5" << endl;
+    cout << "Result  :";
+    head = new ListNode(-1, new ListNode(5, new ListNode(3, new ListNode(4, new ListNode(0)))));
+    head = solution.sortList(head);
+    while (head) {
+        cout << " " << head->val;
+        head = head->next;
+    }
+    cout << endl << endl;
+
+    cout << "Test case 3" << endl;
+    cout << "Input   : []" << endl;
+    cout << "Expected: " << endl;
+    cout << "Result  :";
+    head = nullptr;
+    head = solution.sortList(head);
+    while (head) {
+        cout << " " << head->val;
+        head = head->next;
+    }
+    cout << endl << endl;
+
+    return 0;
+}
